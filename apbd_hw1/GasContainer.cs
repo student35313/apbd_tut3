@@ -2,7 +2,7 @@ namespace apbd_hw1;
 
 public class GasContainer : Container, IHazardNotifier
 {
-    public double Pressure { get; set; }
+    public double Pressure { get; set; } //percents
     
     public GasContainer(double height, double tareWeight, double depth, double maximumPayload, double pressure)
         : base(height, tareWeight, depth, maximumPayload, "G")
@@ -18,17 +18,28 @@ public class GasContainer : Container, IHazardNotifier
     
     public new void EmptyCargo()
     {
-        CargoMass *= 0.05; // оставляем 5%
+        CargoMass *= 0.05;
+        Pressure *= 0.05;
     }
     
     public new void LoadCargo(double mass)
     {
-        if (mass > MaximumPayload)
+        try
+        {
+            base.LoadCargo(mass);
+            Pressure += Pressure * (1 / MaximumPayload * mass);
+        }
+        catch (OverfillException)
         {
             NotifyHazard(SerialNumber, $"Attempt to load {mass} kg exceeds maximum payload {MaximumPayload} kg.");
-            throw new OverfillException($"Cargo mass {mass} exceeds maximum payload of {MaximumPayload}.");
+            throw;
         }
         
-        base.LoadCargo(mass);
     }
+    
+    public override string ToString()
+    {
+        return base.ToString() + $", Pressure={Pressure} atm";
+    }
+
 }
