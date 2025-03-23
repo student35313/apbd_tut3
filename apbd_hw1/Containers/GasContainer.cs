@@ -16,13 +16,13 @@ public class GasContainer : Container, IHazardNotifier
     }
 
     
-    public new void EmptyCargo()
+    public override void EmptyCargo()
     {
         CargoMass *= 0.05;
         Pressure *= 0.05;
     }
     
-    public new void LoadCargo(double mass)
+    public override void LoadCargo(double mass)
     {
         try
         {

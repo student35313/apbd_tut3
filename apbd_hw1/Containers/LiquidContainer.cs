@@ -15,7 +15,7 @@ public class LiquidContainer : Container, IHazardNotifier
         Console.WriteLine($"Hazard notification for container {containerNumber}: {message}");
     }
     
-    public new void LoadCargo(double mass)
+    public override void LoadCargo(double mass)
     {
         double allowedLimit = IsHazardous ? MaximumPayload * 0.5 : MaximumPayload * 0.9;
         if (CargoMass + mass > allowedLimit)

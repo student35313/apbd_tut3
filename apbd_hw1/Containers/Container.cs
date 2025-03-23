@@ -15,7 +15,7 @@ public abstract class Container
     
     public string ContainerTypeCode { get; }
     
-    private static Dictionary<string, int> Counters = new Dictionary<string, int>();
+    private static Dictionary<string, int> _counters = new Dictionary<string, int>();
     
     protected Container(double height, double tareWeight, double depth, double maximumPayload, string containerTypeCode)
     {
@@ -28,14 +28,14 @@ public abstract class Container
         SerialNumber = GenerateSerialNumber();
     }
 
-    public static int GetNextNumber(string containerType)
+    private static int GetNextNumber(string containerType)
     {
-        if (Counters.ContainsKey(containerType))
-            Counters[containerType]++;
+        if (_counters.ContainsKey(containerType))
+            _counters[containerType]++;
         else
-            Counters[containerType] = 1;
+            _counters[containerType] = 1;
 
-        return Counters[containerType];
+        return _counters[containerType];
     }
     private string GenerateSerialNumber()
     {
@@ -43,11 +43,11 @@ public abstract class Container
         return $"KON-{ContainerTypeCode}-{uniqueNumber}";
     }
     
-    public void EmptyCargo()
+    public virtual void EmptyCargo()
     {
         CargoMass = 0;
     }
-    public void LoadCargo(double mass)
+    public virtual void LoadCargo(double mass)
     {
         if (CargoMass + mass > MaximumPayload)
             throw new OverfillException($"Cargo mass {mass} exceeds maximum payload of {MaximumPayload}.");

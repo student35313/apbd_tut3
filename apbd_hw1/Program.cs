@@ -115,8 +115,6 @@ class Program
         Console.WriteLine(ship1.ToString());
         Console.WriteLine("Ship2 Info:");
         Console.WriteLine(ship2.ToString());
-
-        Console.WriteLine("Press any key to exit...");
-        Console.ReadKey();
+        
     }
 }      

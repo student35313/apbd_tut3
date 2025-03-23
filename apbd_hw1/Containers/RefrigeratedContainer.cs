@@ -13,7 +13,7 @@ public class RefrigeratedContainer : Container
             double depth,
             double maximumPayload,
             double initialTemperature)
-            : base(height, tareWeight, depth, maximumPayload, "C") // "C" для refrigerated container
+            : base(height, tareWeight, depth, maximumPayload, "C") 
         {
             ProductType = product;
             SetTemperature(initialTemperature);
